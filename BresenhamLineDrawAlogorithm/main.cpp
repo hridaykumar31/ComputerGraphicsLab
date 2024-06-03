@@ -1,6 +1,5 @@
 #include <bits/stdc++.h>
 #ifdef __APPLE__
-#include <GLUT/glut.h>
 #else
 #include <GL/glut.h>
 #endif
@@ -12,7 +11,9 @@ int x11, y11, x22, y22;
 void bresenhamLineDraw() {
     int dx = abs(x22 - x11);
     int dy = abs(y22 - y11);
-    int x, y, xEnd, yEnd;
+    int dx1 = x22 - x11;
+    int dy1 = y22 - y11;
+    int x, y, xEnd, yEnd, xIncrement, yIncrement;
 
     float m = abs(dy / dx);
 
@@ -21,7 +22,16 @@ void bresenhamLineDraw() {
         int p = 2 * dy - dx;
         int twoDy = 2 * dy;
         int twoDyDx = 2 * (dy - dx);
-
+        yIncrement = 1;
+        if(dx1 < 0 && dy1 < 0)
+        {
+            dy1 = 1;
+            dx1 = 1;
+        }
+        if(dx1 < 0 || dy1 < 0)
+        {
+            yIncrement = -1;
+        }
 
         if (x11 > x22) {
             x = x22;
@@ -40,7 +50,7 @@ void bresenhamLineDraw() {
             if (p < 0) {
                 p += twoDy;
             } else {
-                y++;
+                y += yIncrement;
                 p += twoDyDx;
             }
             glVertex2i(x, y);
@@ -55,6 +65,16 @@ void bresenhamLineDraw() {
         int p = 2 * dx - dy;
         int twoDx = 2 * dx;
         int twoDxDy = 2 * (dx - dy);
+        xIncrement = 1;
+        if(dx1 < 0 && dy1 < 0)
+        {
+            dy1 = 1;
+            dx1 = 1;
+        }
+        if(dx1 < 0 || dy1 < 0)
+        {
+            xIncrement = -1;
+        }
 
 
         if (y11 > y22) {
@@ -74,7 +94,7 @@ void bresenhamLineDraw() {
             if (p < 0) {
                 p += twoDx;
             } else {
-                x++;
+                x += xIncrement;
                 p += twoDxDy;
             }
             glVertex2i(x, y);
